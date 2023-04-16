@@ -17,11 +17,13 @@ using timePoint = timeProvider::time_point;
 using milliseconds = std::chrono::milliseconds;
 using setStateTask = std::function<void(int)>;
 
+// todo test system_clock (rt clock) and steady clock. First choice may be promising. (use rt clock directly?)
 class PulseWidthModulator {
 private:
     TaskScheduler taskScheduler = TaskScheduler();
 
-    std::chrono::duration<int,std::milli> basePeriod = 100ms;
+    //std::chrono::duration<int,std::milli> basePeriod = 100ms;
+    duration basePeriod = 1000us;
     std::vector<task> switchTaskList;
 
     std::function<void()> test1;
@@ -35,7 +37,10 @@ public:
             throw std::invalid_argument("Invalid value for basePeriodFraction. Value must be between 0 and 1.");
 
         //ToDo: this is probably off
-        auto offsetSubsequentExecutionTime =basePeriod; //std::chrono::duration_cast<std::chrono::milliseconds>(basePeriod * basePeriodFraction);
+        //auto offsetSubsequentExecutionTime = std::chrono::duration_cast<double, std::ration<1>>(basePeriod.count() * basePeriodFraction); //std::chrono::duration_cast<std::chrono::milliseconds>(basePeriod * basePeriodFraction);
+
+
+        auto offsetSubsequentExecutionTime = std::chrono::duration_cast<duration>(std::chrono::duration<double>((basePeriod * basePeriodFraction)));
 
         std::cout << "registered Task with" << std::endl;
 
@@ -47,7 +52,7 @@ public:
         std::cout << "base period frac   : " << basePeriodFraction << "\n";
         std::cout << "scaled base period : " << basePeriodFraction * basePeriod.count() << "\n";
 
-        taskScheduler.addTask(std::move(taskSwitchToActive), firstExecutionTime + offsetSubsequentExecutionTime, basePeriod);
+        taskScheduler.addTask(std::move(taskSwitchToActive), firstExecutionTime, basePeriod);
         taskScheduler.addTask(std::move(taskSwitchToInactive), firstExecutionTime + offsetSubsequentExecutionTime, basePeriod);
     }
 

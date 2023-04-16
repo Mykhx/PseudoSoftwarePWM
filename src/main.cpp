@@ -30,19 +30,11 @@ int main() {
     auto turnOn = [&aLine]{aLine.set_value(1);};
     auto turnOff = [&aLine]{aLine.set_value(0);};
 
-    pwm.registerTask(turnOn, turnOff, timeProvider::now(), 1);
-    pwm.startPWM();
-    std::cout << "0.5" << std::endl;
-
-    while(true) {
-        std::this_thread::sleep_for(3s);
-    }
-
     while(true) {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.9);
         pwm.startPWM();
         std::cout << "0.9" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -51,7 +43,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.8);
         pwm.startPWM();
         std::cout << "0.8" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -60,7 +52,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.7);
         pwm.startPWM();
         std::cout << "0.7" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -69,7 +61,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.6);
         pwm.startPWM();
         std::cout << "0.6" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -78,7 +70,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.5);
         pwm.startPWM();
         std::cout << "0.5" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -87,7 +79,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.4);
         pwm.startPWM();
         std::cout << "0.4" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -96,7 +88,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.3);
         pwm.startPWM();
         std::cout << "0.3" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
 
@@ -105,7 +97,7 @@ int main() {
         pwm.registerTask(turnOn, turnOff, timeProvider::now(), 0.2);
         pwm.startPWM();
         std::cout << "0.2" << std::endl;
-        std::this_thread::sleep_for(3s);
+        std::this_thread::sleep_for(1s);
         pwm.clearAllTasks();
         pwm.stopPWM();
     }
