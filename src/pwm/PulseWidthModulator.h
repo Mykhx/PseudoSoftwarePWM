@@ -21,7 +21,7 @@ class PulseWidthModulator {
 private:
     TaskScheduler taskScheduler = TaskScheduler();
 
-    std::chrono::duration<int,std::milli> basePeriod = 20ms;
+    std::chrono::duration<int,std::milli> basePeriod = 100ms;
     std::vector<task> switchTaskList;
 
     std::function<void()> test1;
@@ -34,7 +34,8 @@ public:
         if (basePeriodFraction > 1 or basePeriodFraction <= 0)
             throw std::invalid_argument("Invalid value for basePeriodFraction. Value must be between 0 and 1.");
 
-        auto offsetSubsequentExecutionTime = std::chrono::duration_cast<std::chrono::milliseconds>(basePeriod * basePeriodFraction);
+        //ToDo: this is probably off
+        auto offsetSubsequentExecutionTime =basePeriod; //std::chrono::duration_cast<std::chrono::milliseconds>(basePeriod * basePeriodFraction);
 
         std::cout << "registered Task with" << std::endl;
 
