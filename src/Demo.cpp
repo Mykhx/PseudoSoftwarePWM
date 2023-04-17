@@ -3,7 +3,7 @@
 #include "pwm/PulseWidthModulator.h"
 #include "Demo.h"
 
-void modulateLine(PulseWidthModulator &pwm, const task &turnOn, const task &turnOff,
+void modulateLine(PulseWidthModulator &pwm, const task turnOn, const task turnOff,
                   double increment, timePoint stopTime);
 
 void demoGPIOPin17Modulation() {
@@ -91,13 +91,13 @@ void demoGPIOPin172722Modulation() {
     turnOff22();
 }
 
-void modulateLine(PulseWidthModulator &pwm, const task &turnOn, const task &turnOff,
+void modulateLine(PulseWidthModulator &pwm, const task turnOn, const task turnOff,
                   double increment, timePoint stopTime) {
     double currentPWMFraction = 1.0;
     while (timeProvider::now() < stopTime) {
         pwm.registerTask(turnOff, turnOn, timeProvider::now(), currentPWMFraction);
         pwm.startPWM();
-        std::this_thread::sleep_for(100s);
+        std::this_thread::sleep_for(100ms);
         pwm.clearAllTasks();
         pwm.stopPWM();
         currentPWMFraction -= increment;
@@ -106,4 +106,5 @@ void modulateLine(PulseWidthModulator &pwm, const task &turnOn, const task &turn
     }
     turnOff();
 
+    std::this_thread::sleep_for(1s);
 }
