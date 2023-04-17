@@ -48,10 +48,7 @@ public:
 
     [[nodiscard]] unsigned long long taskQueueSize() const;
 
-    void clearTaskQueue() {
-        std::scoped_lock<std::mutex> scopedLock(queueMutex);
-        taskQueue = taskSchedulerQueue();
-    }
+    void clearTaskQueue();
 
     void addTask(task &&executableAction, timePoint executionTime);
 

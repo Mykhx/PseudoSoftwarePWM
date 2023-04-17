@@ -71,3 +71,8 @@ void TaskScheduler::addTask(task &&executableAction, timePoint executionTime, du
     };
     addTask(std::move(repeatedTask), executionTime);
 }
+
+void TaskScheduler::clearTaskQueue() {
+    std::scoped_lock<std::mutex> scopedLock(queueMutex);
+    taskQueue = taskSchedulerQueue();
+}
