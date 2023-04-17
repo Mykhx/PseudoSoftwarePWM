@@ -24,12 +24,16 @@ private:
     std::function<void()> test2;
 public:
     PulseWidthModulator() : taskScheduler(TaskScheduler()) {};
+
     PulseWidthModulator(milliseconds basePeriod) : taskScheduler(TaskScheduler()), basePeriod(basePeriod) {};
 
-    void registerTask(task taskSwitchToActive, task taskSwitchToInactive, timePoint firstExecutionTime, double basePeriodFraction);
+    void registerTask(task taskSwitchToActive, task taskSwitchToInactive, timePoint firstExecutionTime,
+                      double basePeriodFraction);
 
     void startPWM();
+
     void stopPWM();
+
     void clearAllTasks();
 };
 

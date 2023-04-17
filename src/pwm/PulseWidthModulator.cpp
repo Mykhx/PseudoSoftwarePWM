@@ -5,7 +5,8 @@ void PulseWidthModulator::registerTask(task taskSwitchToActive, task taskSwitchT
     if (basePeriodFraction > 1 or basePeriodFraction <= 0)
         throw std::invalid_argument("Invalid value for basePeriodFraction. Value must be between 0 and 1.");
 
-    auto offsetSubsequentExecutionTime = std::chrono::duration_cast<duration>(std::chrono::duration<double>((basePeriod * basePeriodFraction)));
+    auto offsetSubsequentExecutionTime = std::chrono::duration_cast<duration>(
+            std::chrono::duration<double>((basePeriod * basePeriodFraction)));
     taskScheduler.addTask(std::move(taskSwitchToActive),
                           firstExecutionTime, basePeriod);
     taskScheduler.addTask(std::move(taskSwitchToInactive),

@@ -4,7 +4,7 @@
 #include <chrono>
 #include <functional>
 #include <utility>
-
+ 
 using timeProvider = std::chrono::high_resolution_clock;
 using timePoint = std::chrono::time_point<timeProvider>;
 using duration = timeProvider::duration;
@@ -26,7 +26,6 @@ public:
 
     [[nodiscard]] timePoint getExecutionTime() const;
 };
-
 
 
 #endif //TASKSCHEDULER_SCHEDULEDTASK_H

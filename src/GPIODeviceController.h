@@ -24,24 +24,31 @@ protected:
 
     class request {
     private:
-        GPIODeviceController& deviceController;
-        explicit request(GPIODeviceController& deviceController) : deviceController(deviceController) {};
+        GPIODeviceController &deviceController;
+
+        explicit request(GPIODeviceController &deviceController) : deviceController(deviceController) {};
         std::string consumer;
         std::string lineName;
         GPIODLineDirection lineDirection = OUTPUT;
 
     public:
         request() = delete;
-        static request prepareRequest(GPIODeviceController& deviceController);
+
+        static request prepareRequest(GPIODeviceController &deviceController);
 
         request withConsumer(std::string consumerName);
+
         request withDirection(GPIODLineDirection direction);
+
         request forLine(std::string lineName);
+
         gpiod::line create();
     };
 
 public:
-    explicit GPIODeviceController(const std::string& chipName) : gpiodChip(gpiod::chip(chipName)), pwm(PulseWidthModulator()) {}
+    explicit GPIODeviceController(const std::string &chipName) : gpiodChip(gpiod::chip(chipName)),
+                                                                 pwm(PulseWidthModulator()) {}
+
     GPIODeviceController() : gpiodChip(gpiod::chip(DEFAULT_CHIP_NAME)), pwm(PulseWidthModulator()) {}
 
     request prepareRequest();

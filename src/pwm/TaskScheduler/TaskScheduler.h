@@ -29,27 +29,33 @@ private:
 
     void emplaceTask(ScheduledTask &&task);
 
-    void executeDelayedQueue(const std::stop_token& stopToken);
+    void executeDelayedQueue(const std::stop_token &stopToken);
 
     [[nodiscard]] bool nextTaskNotReady() const;;
 
 public:
     TaskScheduler() : isRunning(false) {}
+
     ~TaskScheduler() {
         shutdown();
     }
 
     void startTaskLoop();
+
     void stopTaskLoop();
 
     [[nodiscard]] bool schedulerIsRunning() const;
+
     [[nodiscard]] unsigned long long taskQueueSize() const;
+
     void clearTaskQueue() {
         std::scoped_lock<std::mutex> scopedLock(queueMutex);
         taskQueue = taskSchedulerQueue();
     }
-    void addTask(task&& executableAction, timePoint executionTime);
-    void addTask(task&& executableAction, timePoint executionTime, duration period);
+
+    void addTask(task &&executableAction, timePoint executionTime);
+
+    void addTask(task &&executableAction, timePoint executionTime, duration period);
 };
 
 #endif //TASKSCHEDULER_TASKSCHEDULER_H

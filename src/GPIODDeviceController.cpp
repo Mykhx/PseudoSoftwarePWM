@@ -21,7 +21,7 @@ GPIODeviceController::request GPIODeviceController::request::withDirection(GPIOD
     this->lineDirection = direction;
     return *this;
 }
-
+ 
 GPIODeviceController::request GPIODeviceController::request::forLine(std::string lineName) {
     this->lineName = std::move(lineName);
     return *this;
