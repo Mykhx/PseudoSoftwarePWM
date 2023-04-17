@@ -3,7 +3,7 @@
 #include "pwm/PulseWidthModulator.h"
 #include "Demo.h"
 
-void demo1() {
+void demoGPIOPin17Modulation() {
     PulseWidthModulator pwm = PulseWidthModulator();
 
     gpiod::chip chip("gpiochip0");

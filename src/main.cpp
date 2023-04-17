@@ -1,7 +1,7 @@
 #include "Demo.h"
 
 int main() {
-    demo1();
+    demoGPIOPin17Modulation();
     return 0;
 }
 
