@@ -8,71 +8,43 @@
 #include <utility>
 
 #include "pwm/PulseWidthModulator.h"
+#include "GPIODLineDirection.h"
+
 #include "gpiod.hpp"
 
 #define DEFAULT_CHIP_NAME "gpiochip0"
+#define DEFAULT_CONSUMER_NAME "GPIODeviceController"
 
-enum direction : int
-{
-    INPUT = gpiod::line_request::DIRECTION_INPUT,
-    OUTPUT = gpiod::line_request::DIRECTION_OUTPUT
-};
 
 class GPIODeviceController {
 protected:
     PulseWidthModulator pwm;
     gpiod::chip gpiodChip;
+    std::string consumerName = DEFAULT_CONSUMER_NAME;
 
-    std::string consumerName = "GPIODeviceController";
-
-public:
     class request {
     private:
         GPIODeviceController& deviceController;
-        request(GPIODeviceController& deviceController) : deviceController(deviceController) {};
+        explicit request(GPIODeviceController& deviceController) : deviceController(deviceController) {};
         std::string consumer;
         std::string lineName;
-        direction lineDirection;
+        GPIODLineDirection lineDirection = OUTPUT;
 
     public:
         request() = delete;
+        static request prepareRequest(GPIODeviceController& deviceController);
 
-        static request prepareRequest(GPIODeviceController& deviceController) {
-            return request(deviceController);
-        }
-
-        request withConsumer(std::string consumer) {
-            this->consumer = std::move(consumer);
-            return *this;
-        }
-
-        request forLine(std::string lineName) {
-            this->lineName = std::move(lineName);
-            return *this;
-        }
-
-        request withDirection(direction direction) {
-            this->lineDirection = direction;
-            return *this;
-        }
-
-        gpiod::line create() {
-            auto request = gpiod::line_request();
-            request.consumer = this->consumer;
-            request.request_type = this->lineDirection;
-            auto line = deviceController.gpiodChip.find_line(this->lineName);
-            line.request(request);
-            return line;
-        }
+        request withConsumer(std::string consumerName);
+        request withDirection(GPIODLineDirection direction);
+        request forLine(std::string lineName);
+        gpiod::line create();
     };
 
-    GPIODeviceController(const std::string& chipName) : gpiodChip(gpiod::chip(chipName)), pwm(PulseWidthModulator()) {}
+public:
+    explicit GPIODeviceController(const std::string& chipName) : gpiodChip(gpiod::chip(chipName)), pwm(PulseWidthModulator()) {}
     GPIODeviceController() : gpiodChip(gpiod::chip(DEFAULT_CHIP_NAME)), pwm(PulseWidthModulator()) {}
 
-    request prepareRequest() {
-        return request::prepareRequest(*this);
-    }
-
+    request prepareRequest();
 };
 
 #endif //PSEUDOSOFTWAREPWM_GPIODEVICECONTROLLER_H

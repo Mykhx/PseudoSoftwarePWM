@@ -1,8 +1,6 @@
 #ifndef TASKSCHEDULER_SCHEDULEDTASK_H
 #define TASKSCHEDULER_SCHEDULEDTASK_H
 
-
-
 #include <chrono>
 #include <functional>
 #include <utility>

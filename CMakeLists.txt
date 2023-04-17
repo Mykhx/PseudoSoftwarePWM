@@ -5,7 +5,7 @@ find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(PseudoSoftwarePWM src/main.cpp src/pwm/PulseWidthModulator.h src/pwm/TaskScheduler/TaskScheduler.h src/pwm/TaskScheduler/TaskScheduler.cpp src/pwm/TaskScheduler/ScheduledTask.cpp src/pwm/TaskScheduler/ScheduledTask.h src/pwm/TaskScheduler/TaskSchedulerError.h src/GPIODeviceController.h)
+add_executable(PseudoSoftwarePWM src/main.cpp src/pwm/PulseWidthModulator.h src/pwm/TaskScheduler/TaskScheduler.h src/pwm/TaskScheduler/TaskScheduler.cpp src/pwm/TaskScheduler/ScheduledTask.cpp src/pwm/TaskScheduler/ScheduledTask.h src/pwm/TaskScheduler/TaskSchedulerError.h src/GPIODeviceController.h src/GPIODLineDirection.h src/GPIODDeviceController.cpp src/pwm/PulseWidthModulator.cpp)
 
 if(THREADS_HAVE_PTHREAD_ARG)
     target_compile_options(PseudoSoftwarePWM PUBLIC "-pthread")
