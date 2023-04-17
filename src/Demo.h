@@ -6,5 +6,7 @@
 #define PSEUDOSOFTWAREPWM_DEMO_H
 
 void demoGPIOPin17Modulation();
- 
+
+void demoGPIOPin172722Modulation();
+
 #endif //PSEUDOSOFTWAREPWM_DEMO_H
