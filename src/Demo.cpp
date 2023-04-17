@@ -37,4 +37,6 @@ void demoGPIOPin17Modulation() {
         if (currentPWMFraction < 0.01 or currentPWMFraction > 0.99)
             increment = -increment;
     }
+
+    turnOff();
 }
