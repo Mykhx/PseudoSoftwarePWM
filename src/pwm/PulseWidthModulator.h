@@ -28,9 +28,6 @@ public:
 
     void registerTask(task taskSwitchToActive, task taskSwitchToInactive, timePoint firstExecutionTime, double basePeriodFraction);
 
-    void printInfo(const timePoint &firstExecutionTime, double basePeriodFraction,
-                   const duration &offsetSubsequentExecutionTime) const;
-
     void startPWM();
     void stopPWM();
     void clearAllTasks();
