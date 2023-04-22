@@ -9,7 +9,7 @@
 #include "TaskScheduler/TaskScheduler.h"
 
 using namespace std::chrono_literals;
-using timeProvider = std::chrono::high_resolution_clock;
+using timeProvider = std::chrono::steady_clock;
 using timePoint = timeProvider::time_point;
 using milliseconds = std::chrono::milliseconds;
 

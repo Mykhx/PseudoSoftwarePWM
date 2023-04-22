@@ -3,7 +3,7 @@
 #include "pwm/PulseWidthModulator.h"
 #include "Demo.h"
 
-void modulateLine(PulseWidthModulator &pwm, const task turnOn, const task turnOff,
+void modulateLine(PulseWidthModulator &pwm, const task& turnOn, const task& turnOff,
                   double increment, timePoint stopTime);
 
 void demoGPIOPin17Modulation() {
@@ -22,11 +22,11 @@ void demoGPIOPin17Modulation() {
     std::this_thread::sleep_for(2s);
     aLine.set_value(0);
 
-    auto turnOn = [&aLine] { aLine.set_value(1); };
-    auto turnOff = [&aLine] { aLine.set_value(0); };
+    auto turnOn = [&aLine] { aLine.get_value() == 0 ? aLine.set_value(1) : void (); };
+    auto turnOff = [&aLine] {  aLine.get_value() == 1 ? aLine.set_value(0) : void (); };
 
-    double increment = 0.01;
-    modulateLine(pwm, turnOn, turnOff, increment, timeProvider::now() + 10s);
+    double increment = 0.05;
+    modulateLine(pwm, turnOn, turnOff, increment, timeProvider::now() + 60s);
 
     turnOff();
 }
@@ -91,20 +91,21 @@ void demoGPIOPin172722Modulation() {
     turnOff22();
 }
 
-void modulateLine(PulseWidthModulator &pwm, const task turnOn, const task turnOff,
+void modulateLine(PulseWidthModulator &pwm, const task& turnOn, const task& turnOff,
                   double increment, timePoint stopTime) {
     double currentPWMFraction = 1.0;
+    pwm.startPWM();
     while (timeProvider::now() < stopTime) {
+        std::cout << "current increment " << currentPWMFraction << "\n";
         pwm.registerTask(turnOff, turnOn, timeProvider::now(), currentPWMFraction);
-        pwm.startPWM();
-        std::this_thread::sleep_for(100ms);
+        std::this_thread::sleep_for(500ms);
         pwm.clearAllTasks();
-        pwm.stopPWM();
         currentPWMFraction -= increment;
-        if (currentPWMFraction < 0.1 or currentPWMFraction > 0.9)
+        if (currentPWMFraction < abs(increment) or currentPWMFraction > 1 - abs(increment))
             increment = -increment;
     }
     turnOff();
+    pwm.stopPWM();
 
     std::this_thread::sleep_for(1s);
 }
