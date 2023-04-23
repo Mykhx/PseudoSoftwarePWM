@@ -1,4 +1,4 @@
-#include "GPIODeviceController.h"
+#include "ChipControl/GPIODeviceController.h"
 #include "gpiod.hpp"
 #include "pwm/PulseWidthModulator.h"
 #include "Demo.h"
@@ -6,12 +6,12 @@
 
 using namespace std::chrono_literals;
 
-void modulateLine(PulseWidthModulator &pwm, const task& turnOn, const task& turnOff,
+void modulateLine(PulseWidthModulator &pwm, const task &turnOn, const task &turnOff,
                   double increment, timePoint stopTime);
 
-void modulateLine3(PulseWidthModulator &pwm, const task& turnOn0, const task& turnOff0,double increment0,
-                   const task& turnOn1, const task& turnOff1,double increment1,
-                   const task& turnOn2, const task& turnOff2,double increment2,
+void modulateLine3(PulseWidthModulator &pwm, const task &turnOn0, const task &turnOff0, double increment0,
+                   const task &turnOn1, const task &turnOff1, double increment1,
+                   const task &turnOn2, const task &turnOff2, double increment2,
                    timePoint stopTime);
 
 void modulateLineRGBColor(PulseWidthModulator &pwm,
@@ -38,8 +38,8 @@ void demoGPIOPin17Modulation() {
     std::this_thread::sleep_for(2s);
     aLine.set_value(0);
 
-    auto turnOn = [&aLine] { aLine.get_value() == 0 ? aLine.set_value(1) : void (); };
-    auto turnOff = [&aLine] {  aLine.get_value() == 1 ? aLine.set_value(0) : void (); };
+    auto turnOn = [&aLine] { aLine.get_value() == 0 ? aLine.set_value(1) : void(); };
+    auto turnOff = [&aLine] { aLine.get_value() == 1 ? aLine.set_value(0) : void(); };
 
     double increment = 0.05;
     modulateLine(pwm, turnOn, turnOff, increment, timeProvider::now() + 60s);
@@ -124,7 +124,7 @@ void demoGPIOPin172722Modulation() {
     turnOff22();
 }
 
-void modulateLine(PulseWidthModulator &pwm, const task& turnOn, const task& turnOff,
+void modulateLine(PulseWidthModulator &pwm, const task &turnOn, const task &turnOff,
                   double increment, timePoint stopTime) {
     double currentPWMFraction = 0.5;
     pwm.startPWM();
@@ -188,9 +188,9 @@ void modulateLine3(PulseWidthModulator &pwm, const task &turnOn0, const task &tu
 
 double getSubsequentIncrement(double increment, double currentPWMFraction) {
     if (currentPWMFraction <= abs(increment)
-    or currentPWMFraction >= 1 - abs(increment)
-    or currentPWMFraction <= 0.2
-    or currentPWMFraction >= 0.9)
+        or currentPWMFraction >= 1 - abs(increment)
+        or currentPWMFraction <= 0.2
+        or currentPWMFraction >= 0.9)
         increment = -increment;
     return increment;
 }

@@ -7,7 +7,7 @@
 
 #include <utility>
 
-#include "pwm/PulseWidthModulator.h"
+#include "../pwm/PulseWidthModulator.h"
 #include "GPIODLineDirection.h"
 
 #include "gpiod.hpp"
@@ -18,7 +18,6 @@
 
 class GPIODeviceController {
 protected:
-    PulseWidthModulator pwm;
     gpiod::chip gpiodChip;
     std::string consumerName = DEFAULT_CONSUMER_NAME;
 
@@ -46,10 +45,9 @@ protected:
     };
 
 public:
-    explicit GPIODeviceController(const std::string &chipName) : gpiodChip(gpiod::chip(chipName)),
-                                                                 pwm(PulseWidthModulator()) {}
+    explicit GPIODeviceController(const std::string &chipName) : gpiodChip(gpiod::chip(chipName)) {}
 
-    GPIODeviceController() : gpiodChip(gpiod::chip(DEFAULT_CHIP_NAME)), pwm(PulseWidthModulator()) {}
+    GPIODeviceController() : gpiodChip(gpiod::chip(DEFAULT_CHIP_NAME)) {}
 
     request prepareRequest();
 };
