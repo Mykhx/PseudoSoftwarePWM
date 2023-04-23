@@ -11,7 +11,7 @@
 using namespace std::chrono_literals;
 using timeProvider = std::chrono::steady_clock;
 using timePoint = timeProvider::time_point;
-using milliseconds = std::chrono::milliseconds;
+using microseconds = std::chrono::microseconds;
 
 class PulseWidthModulator {
 private:
@@ -25,7 +25,7 @@ private:
 public:
     PulseWidthModulator() : taskScheduler(TaskScheduler()) {};
 
-    PulseWidthModulator(milliseconds basePeriod) : taskScheduler(TaskScheduler()), basePeriod(basePeriod) {};
+    PulseWidthModulator(microseconds basePeriod) : taskScheduler(TaskScheduler()), basePeriod(basePeriod) {};
 
     void registerTask(task taskSwitchToActive, task taskSwitchToInactive, timePoint firstExecutionTime,
                       double basePeriodFraction);
