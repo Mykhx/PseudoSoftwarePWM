@@ -1,13 +1,8 @@
-//
-// Created by mkehr on 16.04.2023.
-//
-
 #ifndef PSEUDOSOFTWAREPWM_GPIODEVICECONTROLLER_H
 #define PSEUDOSOFTWAREPWM_GPIODEVICECONTROLLER_H
 
 #include <utility>
 
-#include "../PWM/PulseWidthModulator.h"
 #include "GPIODLineDirection.h"
 
 #include "gpiod.hpp"
