@@ -1,9 +1,7 @@
-//
-// Created by mkehr on 17.04.2023.
-//
-
 #ifndef PSEUDOSOFTWAREPWM_DEMO_H
 #define PSEUDOSOFTWAREPWM_DEMO_H
+
+void defaultLimitFrequencyGPIOPin17();
 
 void demoGPIOPin17Modulation();
 

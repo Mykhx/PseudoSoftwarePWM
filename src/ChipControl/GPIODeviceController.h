@@ -7,7 +7,7 @@
 
 #include <utility>
 
-#include "../pwm/PulseWidthModulator.h"
+#include "../PWM/PulseWidthModulator.h"
 #include "GPIODLineDirection.h"
 
 #include "gpiod.hpp"

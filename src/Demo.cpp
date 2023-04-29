@@ -1,6 +1,6 @@
 #include "ChipControl/GPIODeviceController.h"
 #include "gpiod.hpp"
-#include "pwm/PulseWidthModulator.h"
+#include "PWM/PulseWidthModulator.h"
 #include "Demo.h"
 #include <random>
 
@@ -21,6 +21,25 @@ void modulateLineRGBColor(PulseWidthModulator &pwm,
                           timePoint stopTime);
 
 double getSubsequentIncrement(double increment, double currentPWMFraction);
+
+void defaultLimitFrequencyGPIOPin17() {
+
+    gpiod::chip chip("gpiochip0");
+
+    GPIODeviceController deviceController = GPIODeviceController();
+    auto aLine = deviceController.prepareRequest()
+            .withConsumer("demo")
+            .forLine("GPIO17")
+            .withDirection(OUTPUT)
+            .create();
+
+    auto startTime = timeProvider::now();
+
+    while (timeProvider::now() < startTime + 10s) {
+        aLine.set_value(1);
+        aLine.set_value(0);
+    }
+}
 
 void demoGPIOPin17Modulation() {
     PulseWidthModulator pwm = PulseWidthModulator();
